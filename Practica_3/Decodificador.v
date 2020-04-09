@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
-// Engineer: 
+// Engineer: Nataly Salazar
 // 
 // Create Date:    12:49:26 04/09/2020 
 // Design Name: 
@@ -64,6 +64,6 @@ assign Num = (T == 4'b0111 && clkReduMins == 4'b0000) ? 8'b01000000 :
 				 (T == 4'b1110 && clkReduDec == 4'b0110) ? 8'b10000010 :
 				 (T == 4'b1110 && clkReduDec == 4'b0111) ? 8'b11111000 :
 				 (T == 4'b1110 && clkReduDec == 4'b1000) ? 8'b10000000 :
-																		 8'b10011000 ;
+				  					   8'b10011000 ;
 
 endmodule
