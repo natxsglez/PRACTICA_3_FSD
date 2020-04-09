@@ -43,10 +43,6 @@ assign Num = (T == 4'b0111 && clkReduMins == 4'b0000) ? 8'b01000000 :
 				 (T == 4'b1011 && clkReduSecsD == 4'b0011) ? 8'b10110000 :
 				 (T == 4'b1011 && clkReduSecsD == 4'b0100) ? 8'b10011001 :
 				 (T == 4'b1011 && clkReduSecsD == 4'b0101) ? 8'b10010010 :
-				 (T == 4'b1011 && clkReduSecsD == 4'b0110) ? 8'b10000010 :
-				 (T == 4'b1011 && clkReduSecsD == 4'b0111) ? 8'b11111000 :
-				 (T == 4'b1011 && clkReduSecsD == 4'b1000) ? 8'b10000000 :
-				 (T == 4'b1011 && clkReduSecsD == 4'b1001) ? 8'b10011000 :
 				 //Unidades
 				 (T == 4'b1101 && clkReduSecsU == 4'b0000) ? 8'b01000000 :
 				 (T == 4'b1101 && clkReduSecsU == 4'b0001) ? 8'b01111001 :
