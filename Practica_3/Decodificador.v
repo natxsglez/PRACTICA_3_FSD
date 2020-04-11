@@ -19,51 +19,30 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 module Decodificador(
-	input clkReduDec,
-	input clkReduMins,
-	input clkReduSecsU,
-	input clkReduSecsD,
+	input [3:0]clkReduDec,
+	input [3:0]clkReduMins,
+	input [3:0]clkReduSecsU,
+	input [3:0]clkReduSecsD,
 	input [3:0]T,
 	output [7:0]Num
     );
-assign Num = (T == 4'b0111 && clkReduMins == 4'b0000) ? 8'b01000000 :
-				 (T == 4'b0111 && clkReduMins == 4'b0001) ? 8'b01111001 :
-				 (T == 4'b0111 && clkReduMins == 4'b0010) ? 8'b00100100 :
-				 (T == 4'b0111 && clkReduMins == 4'b0011) ? 8'b00110000 :
-				 (T == 4'b0111 && clkReduMins == 4'b0100) ? 8'b00011001 :
-				 (T == 4'b0111 && clkReduMins == 4'b0101) ? 8'b00010010 :
-				 (T == 4'b0111 && clkReduMins == 4'b0110) ? 8'b00000010 :
-				 (T == 4'b0111 && clkReduMins == 4'b0111) ? 8'b01111000 :
-				 (T == 4'b0111 && clkReduMins == 4'b1000) ? 8'b00000000 :
-				 (T == 4'b0111 && clkReduMins == 4'b1001) ? 8'b00011000 :
-				 //Decenas
-				 (T == 4'b1011 && clkReduSecsD == 4'b0000) ? 8'b11000000 :
-				 (T == 4'b1011 && clkReduSecsD == 4'b0001) ? 8'b11111001 :
-				 (T == 4'b1011 && clkReduSecsD == 4'b0010) ? 8'b10100100 :
-				 (T == 4'b1011 && clkReduSecsD == 4'b0011) ? 8'b10110000 :
-				 (T == 4'b1011 && clkReduSecsD == 4'b0100) ? 8'b10011001 :
-				 (T == 4'b1011 && clkReduSecsD == 4'b0101) ? 8'b10010010 :
-				 //Unidades
-				 (T == 4'b1101 && clkReduSecsU == 4'b0000) ? 8'b01000000 :
-				 (T == 4'b1101 && clkReduSecsU == 4'b0001) ? 8'b01111001 :
-				 (T == 4'b1101 && clkReduSecsU == 4'b0010) ? 8'b00100100 :
-				 (T == 4'b1101 && clkReduSecsU == 4'b0011) ? 8'b00110000 :
-				 (T == 4'b1101 && clkReduSecsU == 4'b0100) ? 8'b00011001 :
-				 (T == 4'b1101 && clkReduSecsU == 4'b0101) ? 8'b00010010 :
-				 (T == 4'b1101 && clkReduSecsU == 4'b0110) ? 8'b00000010 :
-				 (T == 4'b1101 && clkReduSecsU == 4'b0111) ? 8'b01111000 :
-				 (T == 4'b1101 && clkReduSecsU == 4'b1000) ? 8'b00000000 :
-				 (T == 4'b1101 && clkReduSecsU == 4'b1001) ? 8'b00011000 :
-				 //Decimas
-				 (T == 4'b1110 && clkReduDec == 4'b0000) ? 8'b11000000 :
-				 (T == 4'b1110 && clkReduDec == 4'b0001) ? 8'b11111001 :
-				 (T == 4'b1110 && clkReduDec == 4'b0010) ? 8'b10100100 :
-				 (T == 4'b1110 && clkReduDec == 4'b0011) ? 8'b10110000 :
-				 (T == 4'b1110 && clkReduDec == 4'b0100) ? 8'b10011001 :
-				 (T == 4'b1110 && clkReduDec == 4'b0101) ? 8'b10010010 :
-				 (T == 4'b1110 && clkReduDec == 4'b0110) ? 8'b10000010 :
-				 (T == 4'b1110 && clkReduDec == 4'b0111) ? 8'b11111000 :
-				 (T == 4'b1110 && clkReduDec == 4'b1000) ? 8'b10000000 :
-				  					   8'b10011000 ;
+	 
+wire[6:0]dec;
+wire[6:0]mins;
+wire[6:0]secsU;
+wire[6:0]secsD;
+
+Display D0(.n(clkReduDec), .d(dec));
+Display D1(.n(clkReduMins), .d(mins));
+Display D2(.n(clkReduSecsU), .d(secsU));
+Display D3(.n(clkReduSecsD), .d(secsD));
+
+
+assign Num[6:0] = (T == 4'b0111) ? mins :
+						(T == 4'b1011) ? secsD :
+						(T == 4'b1101) ? secsU :
+											  dec ;
+assign Num[7] = (T == 4'b0111 || T == 4'b1101) ? 0 :
+																 1 ;
 
 endmodule
