@@ -21,12 +21,15 @@
 module ClkRedu(
     input clk,
     input reset,
-    output reg clkRedu,
-    integer MAX_MHZ,
-    integer MAX_COUNT
+    output [3:0]num,
+	 input [40:0]MAX_MHZ,
+	 input [3:0]MAX_COUNT,
+	 input sw
     );
 	 
-reg [31:0] conteo;
+reg [40:0]conteo;
+reg [3:0]clkRedu;
+
 always @(posedge clk, posedge reset)
 	begin
 		if(reset)
@@ -36,20 +39,23 @@ always @(posedge clk, posedge reset)
 			end
 		else
 			begin
-				conteo <= conteo + 1;
-				if(conteo == MAX_MHZ) 
+				if(sw)
 					begin
-						case(clkRedu)
-							MAX_COUNT : begin
-									clkRedu <= 0;
-								end
-							default : begin
-									clkRedu <= clkRedu + 1;
-								end
-							endcase
-						conteo <= 0; //reinicia la cuenta
+						conteo <= conteo + 1;
+					if(conteo == MAX_MHZ) //contar hasta 25 millones para hacer Toggleo cada 0.5s
+						begin
+							case(clkRedu)
+								MAX_COUNT : begin
+										clkRedu <= 0;
+									end
+								default : begin
+										clkRedu <= clkRedu + 1;
+									end
+								endcase
+							conteo <= 0; //reinicia la cuenta
+						end
 					end
 			end
 	end
-
+assign num = clkRedu;
 endmodule
